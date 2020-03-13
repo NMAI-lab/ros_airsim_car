@@ -37,12 +37,6 @@ class AirSimConnector:
         self.sem.release()
         return data
     
-    def getImuData(self):
-        self.sem.acquire()
-        data = self.client.getImuData()
-        self.sem.release()
-        return data
-    
     def brake(self, data):
         self.sem.acquire()
         self.car_controls.brake = data

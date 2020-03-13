@@ -10,7 +10,12 @@ def tester():
     connector = AirSimConnector()
 
     speed = connector.getSpeed()
-    print(speed)   
+    print("speed: " + str(speed))
+    
+    gps = connector.getGpsData()
+    print("GPS: " + str(gps))
+    
+    
 
 if __name__ == '__main__':
     try:
