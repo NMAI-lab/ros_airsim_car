@@ -5,6 +5,7 @@
 
 from AirSimConnector import AirSimConnector
 import rospy
+import time
 
 def tester():
     connector = AirSimConnector()
@@ -14,6 +15,13 @@ def tester():
     
     gps = connector.getGpsData()
     print("GPS: " + str(gps))
+    
+    connector.steering(1)
+    connector.throttle(1)
+    
+    time.sleep(10)
+    
+    connector.brake(1)
     
     
 
