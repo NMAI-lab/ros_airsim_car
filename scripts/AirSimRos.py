@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+# This is the main program for this node.
+
 # Created on Mar 12 2020
 # @author: Patrick Gavigan
 
