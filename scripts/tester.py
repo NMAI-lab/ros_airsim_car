@@ -1,27 +1,41 @@
 #!/usr/bin/env python
 
-# Created on Wed Feb 19 16:17:21 2020
+# Created on Mar 12 2020
 # @author: Patrick Gavigan
 
-from AirSimConnector import AirSimConnector
+# Tests the actuators for this node. Do not run as part of normal operation.
+
 import rospy
 import time
+from std_msgs.msg import Float64
 
 def tester():
-    connector = AirSimConnector()
-
-    speed = connector.getSpeed()
-    print("speed: " + str(speed))
     
-    gps = connector.getGpsData()
-    print("GPS: " + str(gps))
+    rospy.init_node('Tester', anonymous=True)
     
-    connector.steering(1)
-    connector.throttle(1)
+    brakePublisher = rospy.Publisher('carCommand/Brake', Float64, queue_size=10)
+    throttlePublisher = rospy.Publisher('carCommand/Throttle', Float64, queue_size=10)
+    steeringPublisher = rospy.Publisher('carCommand/Steering', Float64, queue_size=10)
+    
+    message = Float64()
+    message.data = 1
+    
+    rospy.loginfo("starting test)
+    
+    time.sleep(10)
+    rospy.loginfo("throttle message: " + str(data.data))
+    throttlePublisher.publish(message)
     
     time.sleep(10)
     
-    connector.brake(1)
+    rospy.loginfo("steering message: " + str(data.data))
+    steeringPublisher.publish(message)
+    
+    time.sleep(10)
+    rospy.loginfo("brake message: " + str(data.data))
+    brakePublisher.publish(message)
+    
+    rospy.loginfo("test complete)
     
     
 
