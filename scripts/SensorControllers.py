@@ -5,7 +5,7 @@
 
 import rospy
 from ros_airsim_drone.msg import GpsData
-from std_msgs.msg import float64
+from std_msgs.msg import Float64
 
     
 def runGPS(airSimConnector, publisher):
@@ -41,7 +41,8 @@ def runSpeed(airSimConnector, publisher):
     data = airSimConnector.getSpeed()
     
     # Prerpare the message
-    message = speed
+    message = Float64()
+    message.data = data
     
     # Publish the message
     rospy.loginfo(message)
@@ -50,9 +51,9 @@ def runSpeed(airSimConnector, publisher):
 
 def runSensors(airSimConnector):
 
-    # Initialize the publuishers
+    # Initialize the publishers
     gpsPublisher = rospy.Publisher('carSensor/gps', GpsData, queue_size=10)
-    speedPublisher = rospy.Publisher('carSensor/speed', float64, queue_size=10)
+    speedPublisher = rospy.Publisher('carSensor/speed', Float64, queue_size=10)
     
     # Set the sensor publishing frequency
     rate = rospy.Rate(1) # 1hz
