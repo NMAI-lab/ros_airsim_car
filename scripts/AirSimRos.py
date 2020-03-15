@@ -10,7 +10,6 @@ from ActuatorControllers import runActuators
 from SensorControllers import runSensors
 
 import rospy
-from std_msgs.msg import String
 
 
 def airSimRos():
