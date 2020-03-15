@@ -48,6 +48,16 @@ class AirSimConnector:
         self.sem.release()
         return speed
     
+    def getImage(self):
+        self.sem.acquire()
+        # get camera images from the car
+        # scene vision image in uncompressed RGB array
+        # Line pulled from car_image_raw.py example program on AirSim website
+        data = self.client.simGetImages([
+            airsim.ImageRequest("1", airsim.ImageType.Scene, False, False)])
+        self.sem.release()
+        return data
+    
     # Set the brake
     def brake(self, data):
         self.sem.acquire()
