@@ -20,22 +20,22 @@ def tester():
     message = Float64()
     message.data = 1
     
-    rospy.loginfo("starting test)
+    rospy.loginfo("starting test")
     
     time.sleep(10)
-    rospy.loginfo("throttle message: " + str(data.data))
+    rospy.loginfo("throttle message: " + str(message.data))
     throttlePublisher.publish(message)
     
     time.sleep(10)
     
-    rospy.loginfo("steering message: " + str(data.data))
+    rospy.loginfo("steering message: " + str(message.data))
     steeringPublisher.publish(message)
     
     time.sleep(10)
-    rospy.loginfo("brake message: " + str(data.data))
+    rospy.loginfo("brake message: " + str(message.data))
     brakePublisher.publish(message)
     
-    rospy.loginfo("test complete)
+    rospy.loginfo("test complete")
     
     
 
