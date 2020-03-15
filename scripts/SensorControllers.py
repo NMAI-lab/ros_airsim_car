@@ -6,6 +6,7 @@
 import rospy
 from ros_airsim_drone.msg import GpsData
 from std_msgs.msg import Float64
+from sensor_msgs.msg import Image
 
     
 def runGPS(airSimConnector, publisher):
@@ -48,18 +49,45 @@ def runSpeed(airSimConnector, publisher):
     rospy.loginfo(message)
     publisher.publish(message)
     
+    
+# Based off the car_image_raw.py example from AirSim
+def runCamera(airSimConnector, publisher):
+    # Get the data 
+    responses = airSimConnector.getImage()
+    
+    # Prepare the message
+    for response in responses:
+        img_rgb_string = response.image_data_uint8
 
+        # Populate image message
+        msg = Image() 
+        msg.header.stamp = rospy.Time.now()
+        msg.header.frame_id = "frameId"
+        msg.encoding = "rgb8"
+        msg.height = 360  # resolution should match values in settings.json 
+        msg.width = 640
+        msg.data = img_rgb_string
+        msg.is_bigendian = 0
+        msg.step = msg.width * 3
+
+        # Publish the message
+        rospy.loginfo("Image data " + str(len(response.image_data_uint8)))
+        publisher.publish(msg)
+        
+        
 def runSensors(airSimConnector):
 
     # Initialize the publishers
     gpsPublisher = rospy.Publisher('carSensor/gps', GpsData, queue_size=10)
     speedPublisher = rospy.Publisher('carSensor/speed', Float64, queue_size=10)
+    imagePublisher = rospy.Publisher("carSensor/image", Image, queue_size=1)
     
     # Set the sensor publishing frequency
-    rate = rospy.Rate(1) # 1hz
+    rate = rospy.Rate(10) # 10 hz
 
     # Publishing loop
     while not rospy.is_shutdown():
         runGPS(airSimConnector, gpsPublisher)
         runSpeed(airSimConnector, speedPublisher)
+        runCamera(airSimConnector, imagePublisher)
         rate.sleep()
