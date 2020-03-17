@@ -54,6 +54,8 @@ add_message_files(
   GnssReport.msg
   GpsData.msg
   Vector.msg
+  Lane.msg
+  Lanes.msg
 )
 
 ## Generate services in the 'srv' folder
